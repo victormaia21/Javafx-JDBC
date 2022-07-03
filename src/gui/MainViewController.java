@@ -29,7 +29,7 @@ public class MainViewController implements Initializable{
 	
 	@FXML
 	public void actionmenudepartment() {
-		
+		loadview("/gui/Departmentview.fxml");
 	}
 	
 	@FXML
@@ -52,10 +52,10 @@ public class MainViewController implements Initializable{
 		
 	}
 	
-	public void loadview(String r) {
+	public void loadview(String url) {
 		try {
 			
-		FXMLLoader fl = new FXMLLoader(getClass().getResource(r));
+		FXMLLoader fl = new FXMLLoader(getClass().getResource(url));
 		VBox aboutview = fl.load();
 		Scene scene = Main.getmainscene();
 		VBox mainview = (VBox) ((ScrollPane) scene.getRoot()).getContent();
