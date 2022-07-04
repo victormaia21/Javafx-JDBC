@@ -1,10 +1,13 @@
 package gui;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import application.Main;
 import gui.entities.Department;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -12,14 +15,18 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import model.entities.Departmentservice;
 
 public class DepartmentListController implements Initializable{
 
+	
+	private Departmentservice service;
+	
 	@FXML
 	private Button button;
 	
 	@FXML
-	private TableView<Department>deparmenttable;
+	private TableView<Department>tabledepartment;
 	
 	@FXML
 	private TableColumn<Department, String>tablename;
@@ -27,15 +34,29 @@ public class DepartmentListController implements Initializable{
 	@FXML
 	private TableColumn<Department, Integer>tableid;
 	
+
+	private ObservableList<Department>obslist;
+	 
+	
 	public void onbuttonaction() {
 
 	}
+	
+	
+	public void setdepartmentservice(Departmentservice service) {
+		this.service = service;
+	}
+	
 	
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		Initializenode();
 		
 	}
+	
+	
+	
+	
 
 
 	private void Initializenode() {
@@ -43,9 +64,20 @@ public class DepartmentListController implements Initializable{
 		tableid.setCellValueFactory(new PropertyValueFactory<>("Id"));
 		
 		Stage stage = ((Stage) Main.getmainscene().getWindow());
-		deparmenttable.prefHeightProperty().bind(stage.heightProperty());
+		tabledepartment.prefHeightProperty().bind(stage.heightProperty());
 		
 	}
+	
+	
+	public void updatedepartmentservice() {
+		if(service == null) {
+			throw new IllegalStateException("ERRO");
+		}
+		List<Department>list = service.findall();
+		obslist = FXCollections.observableArrayList(list);
+		tabledepartment.setItems(obslist);
+	}
+	
 
 	
 }

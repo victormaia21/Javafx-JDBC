@@ -15,6 +15,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
+import model.entities.Departmentservice;
 
 public class MainViewController implements Initializable{
 
@@ -29,7 +30,7 @@ public class MainViewController implements Initializable{
 	
 	@FXML
 	public void actionmenudepartment() {
-		loadview("/gui/Departmentview.fxml");
+		loadview2("/gui/Departmentview.fxml");
 	}
 	
 	@FXML
@@ -70,5 +71,31 @@ public class MainViewController implements Initializable{
 		}
 		
 	}
+	
+	public void loadview2(String url) {
+		try {
+			
+		FXMLLoader fl = new FXMLLoader(getClass().getResource(url));
+		VBox aboutview = fl.load();
+		Scene scene = Main.getmainscene();
+		VBox mainview = (VBox) ((ScrollPane) scene.getRoot()).getContent();
+		Node mainmenu = mainview.getChildren().get(0);
+		mainview.getChildren().clear();
+		mainview.getChildren().add(mainmenu);
+		mainview.getChildren().addAll(aboutview);
+		
+		DepartmentListController controller = fl.getController();
+		controller.setdepartmentservice(new Departmentservice());
+		controller.updatedepartmentservice();
+		
+		}
+		catch(IOException e) {
+			Alerts.showAlert("ERRO DE EXCESSÃO", "IOEXCEPTION", e.getMessage(), AlertType.ERROR);
+		}
+		
+	}
+	
+	
 
+	
 }
