@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import application.Main;
-import gui.entities.Department;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -15,6 +14,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import model.entities.Department;
 import model.entities.Departmentservice;
 
 public class DepartmentListController implements Initializable{
@@ -61,8 +61,8 @@ public class DepartmentListController implements Initializable{
 
 
 	private void Initializenode() {
-		tablename.setCellValueFactory(new PropertyValueFactory<>("Name"));
-		tableid.setCellValueFactory(new PropertyValueFactory<>("Id"));
+		tablename.setCellValueFactory(new PropertyValueFactory<>("name"));
+		tableid.setCellValueFactory(new PropertyValueFactory<>("id"));
 		
 		Stage stage = ((Stage) Main.getmainscene().getWindow());
 		tabledepartment.prefHeightProperty().bind(stage.heightProperty());
@@ -71,7 +71,7 @@ public class DepartmentListController implements Initializable{
 	
 	public void updatedepartmentservice() {
 		if(service == null) {
-			throw new IllegalStateException("NÃO EXISTE UMA LISTA DE DEPARTMENT");
+			throw new IllegalStateException("NÃO EXISTE UMA LISTA DE DEPARTAMENTO");
 		}
 		List<Department>list = service.findall();
 		obslist = FXCollections.observableArrayList(list);
