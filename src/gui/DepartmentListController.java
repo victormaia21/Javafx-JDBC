@@ -34,8 +34,9 @@ public class DepartmentListController implements Initializable{
 	@FXML
 	private TableColumn<Department, Integer>tableid;
 	
-
 	private ObservableList<Department>obslist;
+
+	
 	 
 	
 	public void onbuttonaction() {
@@ -43,9 +44,7 @@ public class DepartmentListController implements Initializable{
 	}
 	
 	
-	public void setdepartmentservice(Departmentservice service) {
-		this.service = service;
-	}
+	
 	
 	
 	@Override
@@ -54,7 +53,9 @@ public class DepartmentListController implements Initializable{
 		
 	}
 	
-	
+	public void setdepartmentservice(Departmentservice service) {
+		this.service = service;
+	}
 	
 	
 
@@ -68,15 +69,17 @@ public class DepartmentListController implements Initializable{
 		
 	}
 	
-	
 	public void updatedepartmentservice() {
 		if(service == null) {
-			throw new IllegalStateException("ERRO");
+			throw new IllegalStateException("NÃO EXISTE UMA LISTA DE DEPARTMENT");
 		}
 		List<Department>list = service.findall();
 		obslist = FXCollections.observableArrayList(list);
 		tabledepartment.setItems(obslist);
 	}
+	
+	
+	
 	
 
 	

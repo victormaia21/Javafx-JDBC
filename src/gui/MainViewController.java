@@ -3,6 +3,7 @@ package gui;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.function.Consumer;
 
 import application.Main;
 import gui.util.Alerts;
@@ -30,8 +31,10 @@ public class MainViewController implements Initializable{
 	
 	@FXML
 	public void actionmenudepartment() {
-		loadview2("/gui/Departmentview.fxml");
+		loadview("/gui/Departmentview.fxml", (DepartmentListController controller) -> {controller.setdepartmentservice(new Departmentservice());
+		controller.updatedepartmentservice();});
 	}
+		                                       
 	
 	@FXML
 	public void actionmenuseller() {
@@ -40,7 +43,7 @@ public class MainViewController implements Initializable{
 	
 	@FXML
 	public void actionabout() {
-		loadview("/gui/AboutView.fxml");
+		loadview("/gui/AboutView.fxml", x -> {});
 	}
 	
 	
@@ -53,7 +56,7 @@ public class MainViewController implements Initializable{
 		
 	}
 	
-	public void loadview(String url) {
+	public  <T> void  loadview(String url, Consumer<T>actiondep) {
 		try {
 			
 		FXMLLoader fl = new FXMLLoader(getClass().getResource(url));
@@ -64,6 +67,12 @@ public class MainViewController implements Initializable{
 		mainview.getChildren().clear();
 		mainview.getChildren().add(mainmenu);
 		mainview.getChildren().addAll(aboutview);
+		
+		T controller = fl.getController();
+		actiondep.accept(controller);
+		
+		
+		
 		
 		}
 		catch(IOException e) {
@@ -72,28 +81,7 @@ public class MainViewController implements Initializable{
 		
 	}
 	
-	public void loadview2(String url) {
-		try {
-			
-		FXMLLoader fl = new FXMLLoader(getClass().getResource(url));
-		VBox aboutview = fl.load();
-		Scene scene = Main.getmainscene();
-		VBox mainview = (VBox) ((ScrollPane) scene.getRoot()).getContent();
-		Node mainmenu = mainview.getChildren().get(0);
-		mainview.getChildren().clear();
-		mainview.getChildren().add(mainmenu);
-		mainview.getChildren().addAll(aboutview);
-		
-		DepartmentListController controller = fl.getController();
-		controller.setdepartmentservice(new Departmentservice());
-		controller.updatedepartmentservice();
-		
-		}
-		catch(IOException e) {
-			Alerts.showAlert("ERRO DE EXCESSÃO", "IOEXCEPTION", e.getMessage(), AlertType.ERROR);
-		}
-		
-	}
+	
 	
 	
 
